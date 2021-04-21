@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-04-21T02:49:07.003Z</updated>
+  <updated>2021-04-21T07:16:31.610Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,14 +17,31 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>注解</title>
+    <link href="http://example.com/2021/04/21/%E6%B3%A8%E8%A7%A3/"/>
+    <id>http://example.com/2021/04/21/%E6%B3%A8%E8%A7%A3/</id>
+    <published>2021-04-21T07:15:50.000Z</published>
+    <updated>2021-04-21T07:16:31.610Z</updated>
+    
+    
+    
+    
+    <category term="java基础" scheme="http://example.com/categories/java%E5%9F%BA%E7%A1%80/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>DevOps</title>
     <link href="http://example.com/2021/04/21/DevOps/"/>
     <id>http://example.com/2021/04/21/DevOps/</id>
     <published>2021-04-21T02:49:06.000Z</published>
-    <updated>2021-04-21T02:49:07.003Z</updated>
+    <updated>2021-04-21T07:17:41.522Z</updated>
     
     
     
+    
+    <category term="随笔" scheme="http://example.com/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
   </entry>
@@ -34,7 +51,7 @@
     <link href="http://example.com/2021/04/19/ELK/"/>
     <id>http://example.com/2021/04/19/ELK/</id>
     <published>2021-04-19T08:55:48.000Z</published>
-    <updated>2021-04-19T09:30:13.713Z</updated>
+    <updated>2021-04-21T07:14:23.424Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://zhuanlan.zhihu.com/p/121099453">https://zhuanlan.zhihu.com/p/121099453</a></p><p>ELK是一个解决方案，目的在于搭建一套集中式的日志系统。</p><p>E：Elasticsearch，实时的分布式搜索和分析引擎</p><p>L：Logstash，有实时渠道能力的数据收集引擎</p><p>K：Kibana，可视化Web平台</p><p><a href="https://gitee.com/moxi159753/LearningNotes/tree/master/ElasticStack">https://gitee.com/moxi159753/LearningNotes/tree/master/ElasticStack</a></p>]]></content>
     
@@ -47,6 +64,8 @@
       
     
     
+    
+    <category term="随笔" scheme="http://example.com/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
   </entry>
