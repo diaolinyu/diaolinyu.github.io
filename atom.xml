@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-04-21T08:57:29.184Z</updated>
+  <updated>2021-04-22T02:10:22.043Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,21 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数学素养</title>
+    <link href="http://example.com/2021/04/22/%E6%95%B0%E5%AD%A6%E7%B4%A0%E5%85%BB/"/>
+    <id>http://example.com/2021/04/22/%E6%95%B0%E5%AD%A6%E7%B4%A0%E5%85%BB/</id>
+    <published>2021-04-22T02:08:44.000Z</published>
+    <updated>2021-04-22T02:10:22.043Z</updated>
+    
+    
+    
+    
+    <category term="数学" scheme="http://example.com/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>常用git命令</title>
@@ -59,8 +74,22 @@
     <link href="http://example.com/2021/04/21/%E6%B3%A8%E8%A7%A3/"/>
     <id>http://example.com/2021/04/21/%E6%B3%A8%E8%A7%A3/</id>
     <published>2021-04-21T07:15:50.000Z</published>
-    <updated>2021-04-21T07:32:12.654Z</updated>
+    <updated>2021-04-21T12:02:30.806Z</updated>
     
+    <content type="html"><![CDATA[<p>工作中，用到注解的地方非常多，但是对注解的认知只停留在机械使用阶段。</p><p>这篇文章中，我有以下目标：</p><ol><li>对注解有一个系统的认识</li><li>了解注解的本质及其实现原理</li><li>关于注解的高级用法及案例</li></ol><p> java注解本质上来说就是一个继承了Annotation接口的<strong>接口</strong>。反编译一个注解类，如下图所示：<img src="/Users/v_diaolinyu/Documents/Blog/bolg/source/images/annotation/WechatIMG30379.png" alt="WechatIMG30379"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;工作中，用到注解的地方非常多，但是对注解的认知只停留在机械使用阶段。&lt;/p&gt;
+&lt;p&gt;这篇文章中，我有以下目标：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;对注解有一个系统的认识&lt;/li&gt;
+&lt;li&gt;了解注解的本质及其实现原理&lt;/li&gt;
+&lt;li&gt;关于注解的高级用法及案例&lt;/li&gt;
+&lt;/ol&gt;
+</summary>
+      
     
     
     
