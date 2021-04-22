@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-04-22T02:10:22.043Z</updated>
+  <updated>2021-04-22T02:24:07.856Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,8 +21,20 @@
     <link href="http://example.com/2021/04/22/%E6%95%B0%E5%AD%A6%E7%B4%A0%E5%85%BB/"/>
     <id>http://example.com/2021/04/22/%E6%95%B0%E5%AD%A6%E7%B4%A0%E5%85%BB/</id>
     <published>2021-04-22T02:08:44.000Z</published>
-    <updated>2021-04-22T02:10:22.043Z</updated>
+    <updated>2021-04-22T02:24:07.856Z</updated>
     
+    <content type="html"><![CDATA[<ol><li>生活和数学密不可分</li><li>凡事多问几个为什么（例: 清楚某个理论的前因后果） </li><li>笛卡尔坐标系（以某个点为中心，横向扩展、纵向延伸）</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ol&gt;
+&lt;li&gt;生活和数学密不可分&lt;/li&gt;
+&lt;li&gt;凡事多问几个为什么（例: 清楚某个理论的前因后果） &lt;/li&gt;
+&lt;li&gt;笛卡尔坐标系（以某个点为中心，横向扩展、纵向延伸）&lt;/li&gt;
+&lt;/ol&gt;
+</summary>
+      
     
     
     
