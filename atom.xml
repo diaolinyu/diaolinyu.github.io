@@ -100,9 +100,9 @@
     <link href="http://example.com/2021/04/21/%E6%B3%A8%E8%A7%A3/"/>
     <id>http://example.com/2021/04/21/%E6%B3%A8%E8%A7%A3/</id>
     <published>2021-04-21T07:15:50.000Z</published>
-    <updated>2021-05-07T09:35:11.372Z</updated>
+    <updated>2021-05-07T11:56:36.362Z</updated>
     
-    <content type="html"><![CDATA[<p>工作中，用到注解的地方非常多，但是对注解的认知只停留在机械使用阶段。</p><p>这篇文章中，我有以下目标：</p><ol><li>对注解有一个系统的认识</li><li>了解注解的本质及其实现原理</li><li>关于注解的高级用法及案例</li></ol><p> java注解本质上来说就是一个继承了Annotation接口的<strong>接口</strong>。反编译一个注解类，如下图所示：<img src="/Users/v_diaolinyu/Documents/Blog/bolg/source/images/annotation/WechatIMG30379.png" alt="[WechatIMG30379](https://github.com/diaolinyu/diaolinyu.github.io/blob/master/images/annotation/WechatIMG30379.png)"></p>]]></content>
+    <content type="html"><![CDATA[<p>工作中，用到注解的地方非常多，但是对注解的认知只停留在机械使用阶段。</p><p>这篇文章中，我有以下目标：</p><ol><li>对注解有一个系统的认识</li><li>了解注解的本质及其实现原理</li><li>关于注解的高级用法及案例</li></ol><p> java注解本质上来说就是一个继承了Annotation接口的<strong>接口</strong>。反编译一个注解类，如下图所示：</p><p><img src="/2021/04/21/%E6%B3%A8%E8%A7%A3/%E6%9C%AC%E8%B4%A8.png" alt="本质"></p>]]></content>
     
     
       
