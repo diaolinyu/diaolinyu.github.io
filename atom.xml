@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-04-23T03:12:31.938Z</updated>
+  <updated>2021-05-15T09:52:42.422Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,51 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mybatis概述</title>
+    <link href="http://example.com/2021/05/14/mybatis%E6%BA%90%E7%A0%811/"/>
+    <id>http://example.com/2021/05/14/mybatis%E6%BA%90%E7%A0%811/</id>
+    <published>2021-05-14T03:02:20.000Z</published>
+    <updated>2021-05-15T09:52:42.422Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="阅读策略"><a href="#阅读策略" class="headerlink" title="阅读策略"></a>阅读策略</h4><p>找出软件项目的核心功能，重点关注与核心功能相关的代码。</p><h4 id="mybatis核心功能"><a href="#mybatis核心功能" class="headerlink" title="mybatis核心功能"></a>mybatis核心功能</h4><ul><li>将包含 if等标签的复杂数据库操作语句解析为纯粹的 SQL语句。</li><li>将数据库操作节点和映射接口中的抽象方法进行绑定，在抽象方法被调用时执行数据库操作。</li><li>将输入参数对象转化为数据库操作语句中的参数。</li><li>将数据库操作语句的返回结果转化为对象。</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h4 id=&quot;阅读策略&quot;&gt;&lt;a href=&quot;#阅读策略&quot; class=&quot;headerlink&quot; title=&quot;阅读策略&quot;&gt;&lt;/a&gt;阅读策略&lt;/h4&gt;&lt;p&gt;找出软件项目的核心功能，重点关注与核心功能相关的代码。&lt;/p&gt;
+&lt;h4 id=&quot;mybatis核心功能&quot;&gt;&lt;a href=&quot;</summary>
+      
+    
+    
+    
+    <category term="mybatis" scheme="http://example.com/categories/mybatis/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>接口和抽象方法</title>
+    <link href="http://example.com/2021/05/11/%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95/"/>
+    <id>http://example.com/2021/05/11/%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95/</id>
+    <published>2021-05-11T07:06:57.000Z</published>
+    <updated>2021-05-13T11:37:38.731Z</updated>
+    
+    <content type="html"><![CDATA[<p>java类执行顺序</p><p><a href="https://www.cnblogs.com/timetellu/p/11619158.html">https://www.cnblogs.com/timetellu/p/11619158.html</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;java类执行顺序&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/timetellu/p/11619158.html&quot;&gt;https://www.cnblogs.com/timetellu/p/11619158.html&lt;/a&gt;&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>数学素养</title>
