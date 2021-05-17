@@ -81,19 +81,21 @@
 
 
 
-<meta name="description" content="阅读策略找出软件项目的核心功能，重点关注与核心功能相关的代码。 mybatis核心功能 将包含 if等标签的复杂数据库操作语句解析为纯粹的 SQL语句。 将数据库操作节点和映射接口中的抽象方法进行绑定，在抽象方法被调用时执行数据库操作。 将输入参数对象转化为数据库操作语句中的参数。 将数据库操作语句的返回结果转化为对象。  mybatis包结构 阅读技巧 源码阅读过程中有一个非常重要的技巧，那就是">
+<meta name="description" content="java异常体系    图中所有异常，Error及其子类代表JVM出现异常，且无法通过软件修复； RuntimeException 及其子类是程序设计的错误，可以在编写程序时避免。 以上这两大类异常称为免检异常，即不需要对这两类异常进行强制检查。 而除上述两类异常外的其他异常，它们的发生与外部环境有关，称为必检异常。在编写程序时必须用 try、catch 语句将其包围起来。  异常链 1234pu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mybatis概述">
-<meta property="og:url" content="http://example.com/2021/05/14/mybatis%E6%BA%90%E7%A0%811/index.html">
+<meta property="og:title" content="基础功能包-exceptions包">
+<meta property="og:url" content="http://example.com/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="阅读策略找出软件项目的核心功能，重点关注与核心功能相关的代码。 mybatis核心功能 将包含 if等标签的复杂数据库操作语句解析为纯粹的 SQL语句。 将数据库操作节点和映射接口中的抽象方法进行绑定，在抽象方法被调用时执行数据库操作。 将输入参数对象转化为数据库操作语句中的参数。 将数据库操作语句的返回结果转化为对象。  mybatis包结构 阅读技巧 源码阅读过程中有一个非常重要的技巧，那就是">
+<meta property="og:description" content="java异常体系    图中所有异常，Error及其子类代表JVM出现异常，且无法通过软件修复； RuntimeException 及其子类是程序设计的错误，可以在编写程序时避免。 以上这两大类异常称为免检异常，即不需要对这两类异常进行强制检查。 而除上述两类异常外的其他异常，它们的发生与外部环境有关，称为必检异常。在编写程序时必须用 try、catch 语句将其包围起来。  异常链 1234pu">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/2021/05/14/mybatis%E6%BA%90%E7%A0%811/mabatis1.jpeg">
-<meta property="article:published_time" content="2021-05-14T03:02:20.000Z">
-<meta property="article:modified_time" content="2021-05-16T15:28:24.955Z">
+<meta property="og:image" content="http://example.com/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/exception1.jpeg">
+<meta property="og:image" content="http://example.com/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/exception2.jpeg">
+<meta property="og:image" content="http://example.com/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/exception3.jpeg">
+<meta property="article:published_time" content="2021-05-16T15:32:40.000Z">
+<meta property="article:modified_time" content="2021-05-16T16:14:37.293Z">
 <meta property="article:author" content="dly">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/05/14/mybatis%E6%BA%90%E7%A0%811/mabatis1.jpeg">
+<meta name="twitter:image" content="http://example.com/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/exception1.jpeg">
 
 
 
@@ -123,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2021/05/14/mybatis源码1/"/>
+  <link rel="canonical" href="http://example.com/2021/05/16/基础功能包-exceptions包/"/>
 
 
 
 
 
-  <title>mybatis概述 | Hexo</title>
+  <title>基础功能包-exceptions包 | Hexo</title>
   
 
 
@@ -266,7 +268,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/14/mybatis%E6%BA%90%E7%A0%811/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -283,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">mybatis概述</h1>
+          <h1 class="post-title" itemprop="name headline">基础功能包-exceptions包</h1>
         
 
         <div class="post-meta">
@@ -295,8 +297,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-14T11:02:20+08:00">
-                2021-05-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-16T23:32:40+08:00">
+                2021-05-16
               </time>
             
 
@@ -355,21 +357,49 @@
       
 
       
-        <h4 id="阅读策略"><a href="#阅读策略" class="headerlink" title="阅读策略"></a>阅读策略</h4><p>找出软件项目的核心功能，重点关注与核心功能相关的代码。</p>
-<h4 id="mybatis核心功能"><a href="#mybatis核心功能" class="headerlink" title="mybatis核心功能"></a>mybatis核心功能</h4><ul>
-<li>将包含 if等标签的复杂数据库操作语句解析为纯粹的 SQL语句。</li>
-<li>将数据库操作节点和映射接口中的抽象方法进行绑定，在抽象方法被调用时执行数据库操作。</li>
-<li>将输入参数对象转化为数据库操作语句中的参数。</li>
-<li>将数据库操作语句的返回结果转化为对象。</li>
-</ul>
-<h4 id="mybatis包结构"><a href="#mybatis包结构" class="headerlink" title="mybatis包结构"></a>mybatis包结构</h4><p><img src="/2021/05/14/mybatis%E6%BA%90%E7%A0%811/mabatis1.jpeg" alt="包结构"></p>
-<h4 id="阅读技巧"><a href="#阅读技巧" class="headerlink" title="阅读技巧"></a>阅读技巧</h4><blockquote>
-<p>源码阅读过程中有一个非常重要的技巧，那就是从整个项目的外围源码入手。</p>
-<p>外围源码很少依赖核心源码，相对独立。先阅读外围源码，受到其他未阅读部分的干扰较小。</p>
-<p>核心源码大量依赖外围源码。在阅读核心源码时应确保其涉及的外围源码均已阅读完毕，这样可以降低核心源码的阅读难度。</p>
-<p>于是整个源码阅读过程会如同剥洋葱一般，由外及内、逐层深入。</p>
-<p>MyBatis 源码中，基础功能包是最外围的包，配置解析包位于中间，核心操作包位于内层。因此，本书中会按照基础功能包、配置解析包、核心操作包的顺序，以包为单位，对包中的源代码逐一进行阅读。</p>
+        <h4 id="java异常体系"><a href="#java异常体系" class="headerlink" title="java异常体系"></a>java异常体系</h4><p><img src="/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/exception1.jpeg" alt="异常体系"></p>
+<!--Throwable及其子类类图-->
+
+<blockquote>
+<p>图中所有异常，Error及其子类代表JVM出现异常，且无法通过软件修复；</p>
+<p>RuntimeException 及其子类是程序设计的错误，可以在编写程序时避免。</p>
+<p>以上这两大类异常称为免检异常，即不需要对这两类异常进行强制检查。</p>
+<p>而除上述两类异常外的其他异常，它们的发生与外部环境有关，称为<strong>必检异常</strong>。<strong>在编写程序时必须用 try、catch 语句将其包围起来。</strong></p>
 </blockquote>
+<h4 id="异常链"><a href="#异常链" class="headerlink" title="异常链"></a>异常链</h4><p><img src="/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/exception2.jpeg" alt="异常链"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Throwable</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">			 <span class="keyword">private</span> String detailMessage; 			<span class="comment">// 	用来存储异常的详细信息</span></span><br><span class="line">			 <span class="keyword">private</span> Throwable cause = <span class="keyword">this</span>;   <span class="comment">// 用来存储引发异常的原因</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Throwable对象，其主要的成员变量有 detailMessage和cause。</p>
+</blockquote>
+<h4 id="序列化与反序列化"><a href="#序列化与反序列化" class="headerlink" title="序列化与反序列化"></a>序列化与反序列化</h4><blockquote>
+<p>序列化是把对象转换为字节序列的过程；反序列化是把字节序列恢复为对象的过程。</p>
+<p>对象的序列化主要有两个目的：一是将对象转化成字节后保存在存储介质中，即为了持久化对象；二是将对象转化成字节后在网络上传输，即为了传输对象。</p>
+<p>而与之对应，将字节还原为对象的过程就是反序列化。</p>
+</blockquote>
+<p>序列化对象的目的有两个：</p>
+<pre><code>1.  对象数据持久化
+ 2.  在网络中传输
+</code></pre>
+<p>在 Java中，要表明一个类的对象是可序列化的，则必须继承Serializable接口或其子接口 Externalizable接口。</p>
+<h5 id="serialVersionUID"><a href="#serialVersionUID" class="headerlink" title="serialVersionUID"></a>serialVersionUID</h5><p>serialVersionUID字段叫作<strong>序列化版本控制字段</strong>，我们经常会在实现了 Serializable 接口的类中见到它。</p>
+<blockquote>
+<p>序列化与反序列化过程中，要面临版本问题。例如，将一个User类的对象 user1持久化到了硬盘中，然后增删了 User类的属性，那么此时还能将持久化在硬盘中的 user1对象的序列还原成一个新的 User类的对象吗？</p>
+<p>该问题的回答需要涉及 Serializable接口的 serialVersionUID字段。</p>
+<p>在反序列化过程中，如果对象字节序列中的 serialVersionUID与当前类的该值不同，则反序列化失败，否则成功。</p>
+</blockquote>
+<p>在使用时，一般都会为实现Serializable接口的类<strong>显式声明一个serialVersionUID</strong>。这样便可以：</p>
+<blockquote>
+<p> 在希望类的版本间实现序列化和反序列化的兼容时，保持serialVersionUID值不变。</p>
+<p> 在希望类的版本间序列化和反序列化不兼容时，确保serialVersionUID值发生变化。</p>
+</blockquote>
+<p>mybatis异常体系</p>
+<p><img src="/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/exception3.jpeg" alt="mybatis异常体系"></p>
+<blockquote>
+<p>IbatisException类仅仅作为PersistenceException类的父类存在，所以IbatisException类是被架空的，可以删除IbatisException类后，让PersistenceException类直接继承RuntimeException类。</p>
+</blockquote>
+<h4 id="ExceptionFactory"><a href="#ExceptionFactory" class="headerlink" title="ExceptionFactory"></a>ExceptionFactory</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExceptionFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 不允许实例化该类</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">ExceptionFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Prevent Instantiation</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 静态方法，直接调用</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 生成一个RuntimeException异常</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> message 异常信息</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> e 异常</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span> 新的RuntimeException异常</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> RuntimeException <span class="title">wrapException</span><span class="params">(String message, Exception e)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> PersistenceException(ErrorContext.instance().message(message).cause(e).toString(), e);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -394,8 +424,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/05/11/%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95/" rel="next" title="接口和抽象方法">
-                <i class="fa fa-chevron-left"></i> 接口和抽象方法
+              <a href="/2021/05/16/%E5%85%B3%E9%94%AE%E5%AD%97/" rel="next" title="关键字">
+                <i class="fa fa-chevron-left"></i> 关键字
               </a>
             
           </div>
@@ -403,10 +433,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/05/16/%E5%85%B3%E9%94%AE%E5%AD%97/" rel="prev" title="关键字">
-                关键字 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -536,7 +562,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%85%E8%AF%BB%E7%AD%96%E7%95%A5"><span class="nav-number">1.</span> <span class="nav-text">阅读策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mybatis%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="nav-number">2.</span> <span class="nav-text">mybatis核心功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mybatis%E5%8C%85%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">mybatis包结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%85%E8%AF%BB%E6%8A%80%E5%B7%A7"><span class="nav-number">4.</span> <span class="nav-text">阅读技巧</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#java%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB"><span class="nav-number">1.</span> <span class="nav-text">java异常体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E9%93%BE"><span class="nav-number">2.</span> <span class="nav-text">异常链</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">序列化与反序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#serialVersionUID"><span class="nav-number">3.1.</span> <span class="nav-text">serialVersionUID</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ExceptionFactory"><span class="nav-number">4.</span> <span class="nav-text">ExceptionFactory</span></a></li></ol></div>
             
 
           </div>

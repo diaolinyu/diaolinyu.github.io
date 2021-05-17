@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/</loc>
+    
+    <lastmod>2021-05-16</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://example.com/2021/05/14/mybatis%E6%BA%90%E7%A0%811/</loc>
     
     <lastmod>2021-05-16</lastmod>
@@ -74,7 +81,7 @@
 
   <url>
     <loc>http://example.com/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -84,28 +91,28 @@
   
   <url>
     <loc>http://example.com/categories/%E9%9A%8F%E7%AC%94/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/categories/java%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/categories/mybatis/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/categories/%E6%95%B0%E5%AD%A6/</loc>
-    <lastmod>2021-05-16</lastmod>
+    <lastmod>2021-05-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
