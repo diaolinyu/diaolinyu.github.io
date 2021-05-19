@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-05-18T11:42:37.961Z</updated>
+  <updated>2021-05-19T08:09:50.423Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,16 +21,19 @@
     <link href="http://example.com/2021/05/18/%E9%9A%8F%E7%AC%94/"/>
     <id>http://example.com/2021/05/18/%E9%9A%8F%E7%AC%94/</id>
     <published>2021-05-18T11:41:17.000Z</published>
-    <updated>2021-05-18T11:42:37.961Z</updated>
+    <updated>2021-05-19T08:09:50.423Z</updated>
     
-    <content type="html"><![CDATA[<p>包权限</p><p>protected：同一个包下及其子类</p>]]></content>
+    <content type="html"><![CDATA[<p>包权限</p><p>protected：同一个包下及其子类</p><p>源码阅读网 <a href="http://coderead.cn/">http://coderead.cn</a></p><p>热点接口缓存方案</p><blockquote><p>自己的项目里，高频接口增加本地缓存方案，可以选择用装饰者模式，新定义一个LocalCacheUtil，把redisUtil作为代理放进去。先查localCache，有直接返回，没有查redis，再把redis查询结果放到localCache。多台机器本地缓存失效方式：通过redis pub/sub 通知到各个机器主动失效掉！</p></blockquote>]]></content>
     
     
       
       
     <summary type="html">&lt;p&gt;包权限&lt;/p&gt;
 &lt;p&gt;protected：同一个包下及其子类&lt;/p&gt;
-</summary>
+&lt;p&gt;源码阅读网 &lt;a href=&quot;http://coderead.cn/&quot;&gt;http://coderead.cn&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;热点接口缓存方案&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;自己的项</summary>
       
     
     
@@ -68,9 +71,9 @@
     <link href="http://example.com/2021/05/17/%E5%8F%8D%E5%B0%84/"/>
     <id>http://example.com/2021/05/17/%E5%8F%8D%E5%B0%84/</id>
     <published>2021-05-17T03:23:46.000Z</published>
-    <updated>2021-05-17T11:16:21.699Z</updated>
+    <updated>2021-05-19T08:08:09.091Z</updated>
     
-    <content type="html"><![CDATA[<p>参考文章： <a href="https://zhuanlan.zhihu.com/p/80519709">https://zhuanlan.zhihu.com/p/80519709</a></p><h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><p>通过 Java反射，能够在类的运行过程中知道这个类有哪些属性和方法，还可以修改属性、调用方法、建立类的实例。</p><blockquote><p> 在运行时判断任意一个对象所属的类；</p><p> 在运行时构造任意一个类的对象；</p><p> 在运行时修改任意一个对象的成员变量；</p><p>在运行时调用任意一个对象的方法。</p></blockquote><h4 id="Class对象"><a href="#Class对象" class="headerlink" title="Class对象"></a><strong>Class对象</strong></h4><p>检查一个类之前，必须获取到java.lang.Class对象，java中的所有类型，包括long，int，数组等基本数据类型，都和Class对象有关系。</p><p>我们很多人去医院参加体检的时候，都做过B超检查，医生只需把一个探头在我们身上滑动就可以将我们体内的肝、胆、肾等器官反射到B超设备上显示。</p><p>Class类对象就相当于B超的探头，将一个类的方法、变量、接口、类名、类修饰符等信息告诉运行的程序。</p><p>Java提供了两种方式获取Class对象，一种是使用.class，另外一种是使用Class.forName()。.class方式适用于在编译时已经知道具体的类。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class alunbarClass = Alunbar.class;</span><br></pre></td></tr></table></figure><p>Class.forName()方式适用于运行时<strong>动态获取</strong>Class对象，只需将类名作为forName方法的参数：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    Class alunbarClass1 = Class.forName(<span class="string">&quot;Alunbar&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(ClassNotFoundException e)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;找不到Alunbar类&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>这个方法会出现类找不到的情况，因此使用这个方法获取Class对象时，必须捕获ClassNotFoundException异常。</p></blockquote><h5 id="获取类名"><a href="#获取类名" class="headerlink" title="获取类名"></a><strong>获取类名</strong></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.alunbar;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Alunbar</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span>  <span class="title">main</span><span class="params">(String arts[])</span></span>&#123;</span><br><span class="line">        Class alunbarClass = Alunbar.class;</span><br><span class="line">        System.out.println(alunbarClass.getName());</span><br><span class="line">        System.out.println(alunbarClass.getSimpleName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 运行结果:</span></span><br><span class="line"><span class="comment">// cn.alunbar.Alunbar</span></span><br><span class="line"><span class="comment">// Alunbar</span></span><br></pre></td></tr></table></figure><blockquote><p>getName()方法获取的类名包含包信息。getSimpleName()方法只是获取类名，不包含包信息。</p></blockquote><h5 id="获取类修饰符"><a href="#获取类修饰符" class="headerlink" title="获取类修饰符"></a><strong>获取类修饰符</strong></h5>]]></content>
+    <content type="html"><![CDATA[<p>参考文章： <a href="https://zhuanlan.zhihu.com/p/80519709">https://zhuanlan.zhihu.com/p/80519709</a></p><h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h4><p>通过 Java反射，能够在类的运行过程中知道这个类有哪些属性和方法，还可以修改属性、调用方法、建立类的实例。</p><blockquote><p> 在运行时判断任意一个对象所属的类；</p><p> 在运行时构造任意一个类的对象；</p><p> 在运行时修改任意一个对象的成员变量；</p><p> 在运行时调用任意一个对象的方法。</p></blockquote><h4 id="Class对象"><a href="#Class对象" class="headerlink" title="Class对象"></a><strong>Class对象</strong></h4><p>检查一个类之前，必须获取到java.lang.Class对象，java中的所有类型，包括long，int，数组等基本数据类型，都和Class对象有关系。</p><p>我们很多人去医院参加体检的时候，都做过B超检查，医生只需把一个探头在我们身上滑动就可以将我们体内的肝、胆、肾等器官反射到B超设备上显示。</p><p>Class类对象就相当于B超的探头，将一个类的方法、变量、接口、类名、类修饰符等信息告诉运行的程序。</p><p>Java提供了两种方式获取Class对象，一种是使用.class，另外一种是使用Class.forName()。.class方式适用于在编译时已经知道具体的类。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class alunbarClass = Alunbar.class;</span><br></pre></td></tr></table></figure><p>Class.forName()方式适用于运行时<strong>动态获取</strong>Class对象，只需将类名作为forName方法的参数：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    Class alunbarClass1 = Class.forName(<span class="string">&quot;Alunbar&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(ClassNotFoundException e)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;找不到Alunbar类&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>这个方法会出现类找不到的情况，因此使用这个方法获取Class对象时，必须捕获ClassNotFoundException异常。</p></blockquote><h5 id="获取类名"><a href="#获取类名" class="headerlink" title="获取类名"></a><strong>获取类名</strong></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.alunbar;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Alunbar</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span>  <span class="title">main</span><span class="params">(String arts[])</span></span>&#123;</span><br><span class="line">        Class alunbarClass = Alunbar.class;</span><br><span class="line">        System.out.println(alunbarClass.getName());</span><br><span class="line">        System.out.println(alunbarClass.getSimpleName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 运行结果:</span></span><br><span class="line"><span class="comment">// cn.alunbar.Alunbar</span></span><br><span class="line"><span class="comment">// Alunbar</span></span><br></pre></td></tr></table></figure><blockquote><p>getName()方法获取的类名包含包信息。getSimpleName()方法只是获取类名，不包含包信息。</p></blockquote><h5 id="获取类修饰符"><a href="#获取类修饰符" class="headerlink" title="获取类修饰符"></a><strong>获取类修饰符</strong></h5>]]></content>
     
     
       
@@ -276,14 +279,15 @@
     <link href="http://example.com/2021/04/21/IDEA%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
     <id>http://example.com/2021/04/21/IDEA%E5%BF%AB%E6%8D%B7%E9%94%AE/</id>
     <published>2021-04-21T08:56:03.000Z</published>
-    <updated>2021-04-21T09:08:01.441Z</updated>
+    <updated>2021-05-19T07:20:32.168Z</updated>
     
-    <content type="html"><![CDATA[<p>Command + O ：查找类文件</p>]]></content>
+    <content type="html"><![CDATA[<p>Command + O ：查找类文件</p><p>查看图表diagram ： shift+option+command+u</p>]]></content>
     
     
       
       
     <summary type="html">&lt;p&gt;Command + O ：查找类文件&lt;/p&gt;
+&lt;p&gt;查看图表diagram ： shift+option+command+u&lt;/p&gt;
 </summary>
       
     

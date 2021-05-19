@@ -356,6 +356,11 @@
           
             <p>包权限</p>
 <p>protected：同一个包下及其子类</p>
+<p>源码阅读网 <a target="_blank" rel="noopener" href="http://coderead.cn/">http://coderead.cn</a></p>
+<p>热点接口缓存方案</p>
+<blockquote>
+<p>自己的项目里，高频接口增加本地缓存方案，可以选择用装饰者模式，新定义一个LocalCacheUtil，把redisUtil作为代理放进去。先查localCache，有直接返回，没有查redis，再把redis查询结果放到localCache。多台机器本地缓存失效方式：通过redis pub/sub 通知到各个机器主动失效掉！</p>
+</blockquote>
 
           
         
@@ -647,7 +652,7 @@
 <p> 在运行时判断任意一个对象所属的类；</p>
 <p> 在运行时构造任意一个类的对象；</p>
 <p> 在运行时修改任意一个对象的成员变量；</p>
-<p>在运行时调用任意一个对象的方法。</p>
+<p> 在运行时调用任意一个对象的方法。</p>
 </blockquote>
 <h4 id="Class对象"><a href="#Class对象" class="headerlink" title="Class对象"></a><strong>Class对象</strong></h4><p>检查一个类之前，必须获取到java.lang.Class对象，java中的所有类型，包括long，int，数组等基本数据类型，都和Class对象有关系。</p>
 <p>我们很多人去医院参加体检的时候，都做过B超检查，医生只需把一个探头在我们身上滑动就可以将我们体内的肝、胆、肾等器官反射到B超设备上显示。</p>
