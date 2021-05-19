@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="包权限 protected：同一个包下及其子类 源码阅读网 http:&#x2F;&#x2F;coderead.cn 热点接口缓存方案  自己的项目里，高频接口增加本地缓存方案，可以选择用装饰者模式，新定义一个LocalCacheUtil，把redisUtil作为代理放进去。先查localCache，有直接返回，没有查redis，再把redis查询结果放到localCache。多台机器本地缓存失效方式：通过redis">
+<meta name="description" content="包权限protected：同一个包下及其子类 源码阅读网 http:&#x2F;&#x2F;coderead.cn 热点接口缓存方案 自己的项目里，高频接口增加本地缓存方案，可以选择用装饰者模式，新定义一个LocalCacheUtil，把redisUtil作为代理放进去。先查localCache，有直接返回，没有查redis，再把redis查询结果放到localCache。多台机器本地缓存失效方式：通过redis p">
 <meta property="og:type" content="article">
 <meta property="og:title" content="随笔">
 <meta property="og:url" content="http://example.com/2021/05/18/%E9%9A%8F%E7%AC%94/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="包权限 protected：同一个包下及其子类 源码阅读网 http:&#x2F;&#x2F;coderead.cn 热点接口缓存方案  自己的项目里，高频接口增加本地缓存方案，可以选择用装饰者模式，新定义一个LocalCacheUtil，把redisUtil作为代理放进去。先查localCache，有直接返回，没有查redis，再把redis查询结果放到localCache。多台机器本地缓存失效方式：通过redis">
+<meta property="og:description" content="包权限protected：同一个包下及其子类 源码阅读网 http:&#x2F;&#x2F;coderead.cn 热点接口缓存方案 自己的项目里，高频接口增加本地缓存方案，可以选择用装饰者模式，新定义一个LocalCacheUtil，把redisUtil作为代理放进去。先查localCache，有直接返回，没有查redis，再把redis查询结果放到localCache。多台机器本地缓存失效方式：通过redis p">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-05-18T11:41:17.000Z">
-<meta property="article:modified_time" content="2021-05-19T08:09:50.423Z">
+<meta property="article:modified_time" content="2021-05-19T12:00:53.931Z">
 <meta property="article:author" content="dly">
 <meta name="twitter:card" content="summary">
 
@@ -353,12 +353,51 @@
       
 
       
-        <p>包权限</p>
-<p>protected：同一个包下及其子类</p>
-<p>源码阅读网 <a target="_blank" rel="noopener" href="http://coderead.cn/">http://coderead.cn</a></p>
-<p>热点接口缓存方案</p>
-<blockquote>
+        <h4 id="包权限"><a href="#包权限" class="headerlink" title="包权限"></a>包权限</h4><p>protected：同一个包下及其子类</p>
+<h4 id="源码阅读网"><a href="#源码阅读网" class="headerlink" title="源码阅读网"></a>源码阅读网</h4><p> <a target="_blank" rel="noopener" href="http://coderead.cn/">http://coderead.cn</a></p>
+<h4 id="热点接口缓存方案"><a href="#热点接口缓存方案" class="headerlink" title="热点接口缓存方案"></a>热点接口缓存方案</h4><blockquote>
 <p>自己的项目里，高频接口增加本地缓存方案，可以选择用装饰者模式，新定义一个LocalCacheUtil，把redisUtil作为代理放进去。先查localCache，有直接返回，没有查redis，再把redis查询结果放到localCache。多台机器本地缓存失效方式：通过redis pub/sub 通知到各个机器主动失效掉！</p>
+</blockquote>
+<h4 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h4><h5 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h5><blockquote>
+<ol>
+<li><p>枚举允许继承类吗？</p>
+<p>枚举不允许继承类。Jvm在生成枚举时已经继承了Enum类，由于Java语言是单继承，不支持再继承额外的类</p>
+</li>
+<li><p>枚举允许实现接口吗？</p>
+<p>枚举允许实现接口。因为枚举本身就是一个类，类是可以实现多个接口的。</p>
+</li>
+<li><p>枚举可以用等号比较吗？</p>
+<p>枚举可以用等号比较。Jvm会为每个枚举实例对应生成一个类对象，这个类对象是用public static final修饰的，在static代码块中初始化，是一个单例</p>
+</li>
+<li><p>可以继承枚举吗？</p>
+<p>不可以继承枚举。因为Jvm在生成枚举类时，将它声明为final。</p>
+</li>
+<li><p>枚举可以实现单例模式吗？</p>
+<p>枚举本身就是一种对单例设计模式友好的形式，它是实现单例模式的一种很好的方式。</p>
+</li>
+<li><p>当使用compareTo()比较枚举时，比较的是什么？</p>
+<p>枚举类型的compareTo()方法比较的是枚举类对象的ordinal的值。</p>
+</li>
+<li><p>当使用equals()比较枚举的时候，比较的是什么？</p>
+<p>枚举类型的equals()方法比较的是枚举类对象的内存地址，作用与等号等价。</p>
+</li>
+</ol>
+</blockquote>
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">Fruit</span></span>&#123;</span><br><span class="line">    APPLE(<span class="number">1</span>),ORANGE(<span class="number">2</span>),BANANA(<span class="number">3</span>);</span><br><span class="line">    <span class="keyword">int</span> code;</span><br><span class="line"></span><br><span class="line">    Fruit(<span class="keyword">int</span> code)&#123;</span><br><span class="line">        <span class="keyword">this</span>.code=code;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用Jad命令反编译Fruit.class文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Fruit</span> <span class="keyword">extends</span> <span class="title">Enum</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Fruit[] values()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> (Fruit[])$VALUES.clone();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Fruit <span class="title">valueOf</span><span class="params">(String s)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (Fruit)Enum.valueOf(Fruit, s);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Fruit</span><span class="params">(String s, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(s, i);</span><br><span class="line">        code = j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Fruit APPLE;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Fruit ORANGE;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Fruit BANANA;</span><br><span class="line">    <span class="keyword">int</span> code;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Fruit $VALUES[];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span></span><br><span class="line">    &#123;</span><br><span class="line">        APPLE = <span class="keyword">new</span> Fruit(<span class="string">&quot;APPLE&quot;</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">        ORANGE = <span class="keyword">new</span> Fruit(<span class="string">&quot;ORANGE&quot;</span>, <span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">        BANANA = <span class="keyword">new</span> Fruit(<span class="string">&quot;BANANA&quot;</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">        $VALUES = (<span class="keyword">new</span> Fruit[] &#123;</span><br><span class="line">            APPLE, ORANGE, BANANA</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="结论"><a href="#结论" class="headerlink" title="结论:"></a>结论:</h5><p>jvm做了以下事情</p>
+<blockquote>
+<ul>
+<li><em>枚举类是用final修饰的，并且默认继承Enum类</em></li>
+<li><em>为每个枚举实例对应创建一个类对象，这些类对象是用public static final修饰的。同时生成一个数组，用于保存全部的类对象</em></li>
+<li><em>生成一个静态代码块，用于初始化类对象和类对象数组</em></li>
+<li><em>生成一个构造函数，构造函数包含自定义参数和两个默认参数</em></li>
+<li><em>生成一个静态的values()方法，用于返回所有的类对象</em></li>
+<li><em>生成一个静态的valueOf()方法，根据name参数返回对应的类实例</em></li>
+</ul>
 </blockquote>
 
       
@@ -444,8 +483,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -503,6 +551,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%85%E6%9D%83%E9%99%90"><span class="nav-number">1.</span> <span class="nav-text">包权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%BD%91"><span class="nav-number">2.</span> <span class="nav-text">源码阅读网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%83%AD%E7%82%B9%E6%8E%A5%E5%8F%A3%E7%BC%93%E5%AD%98%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">热点接口缓存方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE"><span class="nav-number">4.</span> <span class="nav-text">枚举</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">问题：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">4.3.</span> <span class="nav-text">结论:</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
