@@ -1677,7 +1677,7 @@
 </blockquote>
 <h5 id="第二目标：映射配置"><a href="#第二目标：映射配置" class="headerlink" title="第二目标：映射配置"></a><strong>第二目标：映射配置</strong></h5><p>第二个要搞定的目标，就是SQL执行流程当中，所需要的三大映射：分别是动态SQL映射、参数映射、以及结果集映射。不仅要搞清楚映射配置的加载与解析，更重要的弄清楚映射逻辑。</p>
 <ul>
-<li><strong>加载解析</strong>：指用户配置的XML解析成JAVA配置对象。比如<Select>….</Select>块,最终要解析成SqlSource。或<resultMap>…</resultMap> 要解析成ResultMap对象。</li>
+<li><strong>加载解析</strong>：指用户配置的XML解析成JAVA配置对象。比如<code>&lt;Select&gt;....&lt;/Select&gt;</code>块,最终要解析成SqlSource。或<code>&lt;resultMap&gt;...&lt;/resultMap&gt;</code> 要解析成ResultMap对象。</li>
 <li><strong>映射逻辑</strong>：比如SqlSource如何基于参数生成可执行SQL，ResultMap如何将结果集，解析成JAVA对象等。</li>
 </ul>
 <p>这里面涉及内容非常多，同样可以划分成一个个小目标：</p>
