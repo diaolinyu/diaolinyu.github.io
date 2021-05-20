@@ -1664,7 +1664,93 @@
       
         
           
-            <h4 id="阅读策略"><a href="#阅读策略" class="headerlink" title="阅读策略"></a>阅读策略</h4><p>找出软件项目的核心功能，重点关注与核心功能相关的代码。</p>
+            <h4 id="mybatis学习流程"><a href="#mybatis学习流程" class="headerlink" title="mybatis学习流程"></a>mybatis学习流程</h4><h5 id="第一目标：Sql执行流程"><a href="#第一目标：Sql执行流程" class="headerlink" title="第一目标：Sql执行流程"></a>第一目标：Sql执行流程</h5><blockquote>
+<p>MyBatis源码学习的第一个目标就是要搞定四个组件所组成的Sql执行流程。这个四个组件分别是，执行器(Execute)、Sql处理器(StatementHandler)、参数处理器(ParameterHandler)、结果集处理器(ResultSetHandler)。这个目标又可分解成4个小目标</p>
+<ol>
+<li>理解四个组件执行上的顺序</li>
+<li>每个组件的作用及意义</li>
+<li>掌握Execute 的三个实现逻辑</li>
+<li>掌握StatementHandler的三个实现逻辑</li>
+</ol>
+<p>这个目标不是最难的，但是最要的。如果有一天你把学的MyBatis源码忘的差不多了，也希望你这个流程不要忘，这是MySql源码的主干和肪脉络。顺着它就可以把MyBatis知识再拾回来。</p>
+<p>说明：关于参数处理、结果集处理其主要逻辑细节在于映射处理，可以放到映射篇章学习。</p>
+</blockquote>
+<h5 id="第二目标：映射配置"><a href="#第二目标：映射配置" class="headerlink" title="第二目标：映射配置"></a><strong>第二目标：映射配置</strong></h5><p>第二个要搞定的目标，就是SQL执行流程当中，所需要的三大映射：分别是动态SQL映射、参数映射、以及结果集映射。不仅要搞清楚映射配置的加载与解析，更重要的弄清楚映射逻辑。</p>
+<ul>
+<li><strong>加载解析</strong>：指用户配置的XML解析成JAVA配置对象。比如<Select>….</Select>块,最终要解析成SqlSource。或<resultMap>…</resultMap> 要解析成ResultMap对象。</li>
+<li><strong>映射逻辑</strong>：比如SqlSource如何基于参数生成可执行SQL，ResultMap如何将结果集，解析成JAVA对象等。</li>
+</ul>
+<p>这里面涉及内容非常多，同样可以划分成一个个小目标：</p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th><strong>小目标</strong></th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td align="left">理解Sql映射声明(MappedStatement)的作用，以及它与三大映射的关系。</td>
+</tr>
+<tr>
+<td>2</td>
+<td align="left">掌握动态SQL(sqlSource)解析过程，包括其脚本表达示的执行逻辑</td>
+</tr>
+<tr>
+<td>3</td>
+<td align="left">掌握MyBatis所封装的映射工具包的使用</td>
+</tr>
+<tr>
+<td>4</td>
+<td align="left">掌握参数转换过程，以及映射的封装过程</td>
+</tr>
+<tr>
+<td>5</td>
+<td align="left">掌握结果集映射核心逻辑，包括关联映射，1对1、1对多的处理。还有更复杂的循环依赖处理</td>
+</tr>
+<tr>
+<td>6</td>
+<td align="left">掌握全部配置(Confgiuration) 的核心定位,以及它的加载解析过程</td>
+</tr>
+</tbody></table>
+<p>结果集映射是整个MyBatis源码当中的最难的点，其关联映射会涉及子查询、一级缓存引用、循环依赖、延迟加载、懒加载、自动映射等知识点。个个都不是善茬，攻克不易。</p>
+</blockquote>
+<h5 id="第三目标：扩展支撑"><a href="#第三目标：扩展支撑" class="headerlink" title="第三目标：扩展支撑"></a><strong>第三目标：扩展支撑</strong></h5><p>前面两个目标如果搞定了，恭喜你，MyBatis实质上你已经拿下了，接下来的学习就会有一种水道渠成的轻松。</p>
+<p>所谓扩展指对主流程的延伸。如：通过执行器可以完成所有功能，但使用太繁琐，会话(SqlSession)正是为简化它的使用。Mapper接口的设定也是一样，是为进一步简化使用会话。</p>
+<p>除了针对易用性扩展，还有提高执行性能的扩展，比如：缓存、懒加载等。最后的插件机制则是暴露给用户自定义的扩展。接下来我们继续分解学习目标：</p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th><strong>小目标</strong></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>掌握一二级缓存的结构，及执行逻辑。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>理解会话的意义和其采用的设计模式。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>掌握Mapper接口动态代理流程。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>掌握插件机制底层原理。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>掌握懒加载的流程。</td>
+</tr>
+</tbody></table>
+<p>在当前内容学习过程当中， 你也会掌握大量的设计模式，如二级缓存的装饰器+责任链模式、会话所采用的门面模式、以及Mapper接口对应动态代理模式等。</p>
+</blockquote>
+<h4 id="阅读策略"><a href="#阅读策略" class="headerlink" title="阅读策略"></a>阅读策略</h4><p>找出软件项目的核心功能，重点关注与核心功能相关的代码。</p>
 <h4 id="mybatis核心功能"><a href="#mybatis核心功能" class="headerlink" title="mybatis核心功能"></a>mybatis核心功能</h4><ul>
 <li>将包含 if等标签的复杂数据库操作语句解析为纯粹的 SQL语句。</li>
 <li>将数据库操作节点和映射接口中的抽象方法进行绑定，在抽象方法被调用时执行数据库操作。</li>
