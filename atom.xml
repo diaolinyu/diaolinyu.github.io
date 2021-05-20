@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-05-20T03:18:56.687Z</updated>
+  <updated>2021-05-20T08:42:15.817Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,15 +21,21 @@
     <link href="http://example.com/2021/05/20/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/"/>
     <id>http://example.com/2021/05/20/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/</id>
     <published>2021-05-20T03:17:45.000Z</published>
-    <updated>2021-05-20T03:18:56.687Z</updated>
+    <updated>2021-05-20T08:42:15.817Z</updated>
     
+    <content type="html"><![CDATA[<p>众多优秀的开源框架中，其源码大量使用了设计模式，其中责任链模式是比较重要并且被广泛使用的，如果对设计模式不清楚，在阅读源码的过程中就很容易迷失方向。</p><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>责任链模式是什么？</p><blockquote><p>这种模式在结构上由多个部件、基于引用组成一串链条，行为上请求从链条的头部传递到各个节点，从而触发执行各个节点所要负责的业务逻辑。</p></blockquote><h4 id="mybatis缓存示例"><a href="#mybatis缓存示例" class="headerlink" title="mybatis缓存示例"></a>mybatis缓存示例</h4><p>在日常工作中，缓存是比较常见的一个功能，通常情况下请求数据是从数据库读取的，为了加快响应速度，我们引入缓存，请求数据直接从内存返回。</p><p>一个缓存组件，其功能主要是存储、获取，辅助功能可以包括过期删除、线程安全、序列化、命中率统计等等。</p><p>mybatis中的缓存实现采用的就是</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;众多优秀的开源框架中，其源码大量使用了设计模式，其中责任链模式是比较重要并且被广泛使用的，如果对设计模式不清楚，在阅读源码的过程中就很容易迷失方向。&lt;/p&gt;
+&lt;h4 id=&quot;原理&quot;&gt;&lt;a href=&quot;#原理&quot; class=&quot;headerlink&quot; title=&quot;原理&quot;&gt;&lt;/</summary>
+      
     
     
     
     <category term="设计模式" scheme="http://example.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
-    
-    <category term="设计" scheme="http://example.com/tags/%E8%AE%BE%E8%AE%A1/"/>
     
   </entry>
   
@@ -189,7 +195,7 @@
     <link href="http://example.com/2021/05/14/mybatis%E6%BA%90%E7%A0%811/"/>
     <id>http://example.com/2021/05/14/mybatis%E6%BA%90%E7%A0%811/</id>
     <published>2021-05-14T03:02:20.000Z</published>
-    <updated>2021-05-16T15:28:24.955Z</updated>
+    <updated>2021-05-20T08:42:05.106Z</updated>
     
     <content type="html"><![CDATA[<h4 id="阅读策略"><a href="#阅读策略" class="headerlink" title="阅读策略"></a>阅读策略</h4><p>找出软件项目的核心功能，重点关注与核心功能相关的代码。</p><h4 id="mybatis核心功能"><a href="#mybatis核心功能" class="headerlink" title="mybatis核心功能"></a>mybatis核心功能</h4><ul><li>将包含 if等标签的复杂数据库操作语句解析为纯粹的 SQL语句。</li><li>将数据库操作节点和映射接口中的抽象方法进行绑定，在抽象方法被调用时执行数据库操作。</li><li>将输入参数对象转化为数据库操作语句中的参数。</li><li>将数据库操作语句的返回结果转化为对象。</li></ul><h4 id="mybatis包结构"><a href="#mybatis包结构" class="headerlink" title="mybatis包结构"></a>mybatis包结构</h4><p><img src="/2021/05/14/mybatis%E6%BA%90%E7%A0%811/mabatis1.jpeg" alt="包结构"></p><h4 id="阅读技巧"><a href="#阅读技巧" class="headerlink" title="阅读技巧"></a>阅读技巧</h4><blockquote><p>源码阅读过程中有一个非常重要的技巧，那就是从整个项目的外围源码入手。</p><p>外围源码很少依赖核心源码，相对独立。先阅读外围源码，受到其他未阅读部分的干扰较小。</p><p>核心源码大量依赖外围源码。在阅读核心源码时应确保其涉及的外围源码均已阅读完毕，这样可以降低核心源码的阅读难度。</p><p>于是整个源码阅读过程会如同剥洋葱一般，由外及内、逐层深入。</p><p>MyBatis 源码中，基础功能包是最外围的包，配置解析包位于中间，核心操作包位于内层。因此，本书中会按照基础功能包、配置解析包、核心操作包的顺序，以包为单位，对包中的源代码逐一进行阅读。</p></blockquote>]]></content>
     
