@@ -261,6 +261,207 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/27/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/05/27/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" itemprop="url">单例模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-27T10:59:10+08:00">
+                2021-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>23种设计模式中，单例模式是比较简单并且较为常用的一种。</p>
+<blockquote>
+<p>什么是单例模式？</p>
+<p>单例模式的特点是什么？</p>
+<p>饿汉式一定比懒汉式差吗？</p>
+<p>单例模式是否存在缺陷？有没有替代方案？</p>
+</blockquote>
+<h5 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h5><p>定义很简单，一个类只允许创建一个实例，那么这个类就是单例类，这种模式就是单例模式。</p>
+<blockquote>
+<p>定义中提到，“一个类只允许创建唯一一个对象”。那对象的唯一性的作用范围是什么呢？是指线程内只允许创建一个对象，还是指进程内只允许创建一个对象？答案是后者，也就是说，单例模式创建的对象是进程唯一的。单例类中对象的唯一性的作用范围是进程内的，在进程间是不唯一的。</p>
+</blockquote>
+<p>我们重点看一下，为什么我们需要单例这种设计模式？它能解决哪些问题？接下来我通过两个实战案例来讲解。</p>
+<h6 id="案例一：处理资源访问冲突"><a href="#案例一：处理资源访问冲突" class="headerlink" title="案例一：处理资源访问冲突"></a>案例一：处理资源访问冲突</h6><p>在这个例子中，我们自定义实现了一个往文件中打印日志的 Logger 类。具体的代码实现如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Logger</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> FileWriter writer;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Logger</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    File file = <span class="keyword">new</span> File(<span class="string">&quot;/Users/wangzheng/log.txt&quot;</span>);</span><br><span class="line">    writer = <span class="keyword">new</span> FileWriter(file, <span class="keyword">true</span>); <span class="comment">//true表示追加写入</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">log</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">    writer.write(mesasge);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Logger类的应用示例：</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> Logger logger = <span class="keyword">new</span> Logger();</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">(String username, String password)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...省略业务逻辑代码...</span></span><br><span class="line">    logger.log(username + <span class="string">&quot; logined!&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderController</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> Logger logger = <span class="keyword">new</span> Logger();</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">create</span><span class="params">(OrderVo order)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...省略业务逻辑代码...</span></span><br><span class="line">    logger.log(<span class="string">&quot;Created an order: &quot;</span> + order.toString());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面这段代码是有问题的</p>
+<p>在上面的代码中，我们注意到，所有的日志都写入到同一个文件 /Users/wangzheng/log.txt 中。在 UserController 和 OrderController 中，我们分别创建两个 Logger 对象。<strong>在 Web 容器的 Servlet 多线程环境下，如果两个 Servlet 线程同时分别执行 login() 和 create() 两个函数，并且同时写日志到 log.txt 文件中，那就有可能存在日志信息互相覆盖的情况。</strong></p>
+<p>如何解决这个问题呢？我们最先想到的可能就是加锁，给log()函数加互斥锁，同一时刻只允许一个线程调用执行 log() 函数。具体的代码实现如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Logger</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> FileWriter writer;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Logger</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    File file = <span class="keyword">new</span> File(<span class="string">&quot;/Users/wangzheng/log.txt&quot;</span>);</span><br><span class="line">    writer = <span class="keyword">new</span> FileWriter(file, <span class="keyword">true</span>); <span class="comment">//true表示追加写入</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">log</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span>(<span class="keyword">this</span>) &#123; <span class="comment">// this 代表对象级别的锁</span></span><br><span class="line">      writer.write(mesasge);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是，这真的能解决多线程写入日志时相互覆盖的问题吗？答案是否定的，这是因为，这种锁是一<strong>个对象级别</strong>的锁，一个对象在不同的线程下同时调用 log() 函数，会被强制要求顺序执行。但是，不同的对象之间并不共享同一把锁。在不同的线程下，通过不同的对象调用执行 log() 函数，锁并不会起作用，仍然有可能存在写入日志互相覆盖的问题。</p>
+<p>实际上，要想解决这个问题也不难，我们只需要把对象级别的锁，换成类级别的锁就可以了。让所有的对象都共享同一把锁。这样就避免了不同对象之间同时调用 log() 函数，而导致的日志覆盖问题。具体的代码实现如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Logger</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> FileWriter writer;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Logger</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    File file = <span class="keyword">new</span> File(<span class="string">&quot;/Users/wangzheng/log.txt&quot;</span>);</span><br><span class="line">    writer = <span class="keyword">new</span> FileWriter(file, <span class="keyword">true</span>); <span class="comment">//true表示追加写入</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">log</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span>(Logger.class) &#123; <span class="comment">// 类级别的锁</span></span><br><span class="line">      writer.write(mesasge);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了使用<strong>类级别锁</strong>之外，实际上，<strong>解决资源竞争问题</strong>的办法还有很多，<strong>分布式锁</strong>是最常听到的一种解决方案。不过，实现一个安全可靠、无 bug、高性能的分布式锁，并不是件容易的事情。除此之外，<strong>并发队列</strong>（比如 Java 中的 BlockingQueue）也可以解决这个问题：多个线程同时往并发队列里写日志，一个单独的线程负责将并发队列中的数据，写入到日志文件。这种方式实现起来也稍微有点复杂。</p>
+<p>相对于这两种解决方案，单例模式的解决思路就简单一些了。我们将 Logger 设计成一个单例类，<strong>程序中只允许创建一个 Logger 对象</strong>，所有的线程共享使用的这一个 Logger 对象，共享一个 FileWriter 对象，而 FileWriter 本身是对象级别线程安全的，也就避免了多线程情况下写日志会互相覆盖的问题。**(一个对象在不同的线程下调用log（）函数，会被强制要求顺序执行。)**</p>
+<p>按照这个设计思路，我们实现了 Logger 单例类。具体代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Logger</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> FileWriter writer;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger instance = <span class="keyword">new</span> Logger();</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Logger</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    File file = <span class="keyword">new</span> File(<span class="string">&quot;/Users/wangzheng/log.txt&quot;</span>);</span><br><span class="line">    writer = <span class="keyword">new</span> FileWriter(file, <span class="keyword">true</span>); <span class="comment">//true表示追加写入</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Logger <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">log</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">    writer.write(mesasge);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Logger类的应用示例：</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">(String username, String password)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...省略业务逻辑代码...</span></span><br><span class="line">    Logger.getInstance().log(username + <span class="string">&quot; logined!&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderController</span> </span>&#123;  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">create</span><span class="params">(OrderVo order)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...省略业务逻辑代码...</span></span><br><span class="line">    Logger.getInstance().log(<span class="string">&quot;Created a order: &quot;</span> + order.toString());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="案例二：表示全局唯一类"><a href="#案例二：表示全局唯一类" class="headerlink" title="案例二：表示全局唯一类"></a>案例二：表示全局唯一类</h6><p>从业务概念上，如果有些数据在系统中只应保存一份，那就比较适合设计为单例类。</p>
+<p>比如，配置信息类。在系统中，我们只有一个配置文件，当配置文件被加载到内存之后，以对象的形式存在，也理所应当只有一份。</p>
+<p>再比如，唯一递增 ID 号码生成器，如果程序中有两个对象，那就会存在生成重复 ID 的情况，所以，我们应该将 ID 生成器类设计为单例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicLong;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdGenerator</span> </span>&#123;</span><br><span class="line">  <span class="comment">// AtomicLong是一个Java并发库中提供的一个原子变量类型,</span></span><br><span class="line">  <span class="comment">// 它将一些线程不安全需要加锁的复合操作封装为了线程安全的原子操作，</span></span><br><span class="line">  <span class="comment">// 比如下面会用到的incrementAndGet().</span></span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> IdGenerator instance = <span class="keyword">new</span> IdGenerator();</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">IdGenerator</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IdGenerator <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// IdGenerator使用举例</span></span><br><span class="line"><span class="keyword">long</span> id = IdGenerator.getInstance().getId();</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="如何实现一个单例"><a href="#如何实现一个单例" class="headerlink" title="如何实现一个单例"></a>如何实现一个单例</h5><p>要实现一个单例，我们需要关注的点无外乎下面几个：</p>
+<ul>
+<li>构造函数需要是 private 访问权限的，这样才能避免外部通过 new 创建实例；</li>
+<li>考虑对象创建时的线程安全问题；</li>
+<li>考虑是否支持延迟加载；</li>
+<li>考虑 getInstance() 性能是否高（是否加锁）。</li>
+</ul>
+<h6 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h6><p>饿汉式的实现方式比较简单。在类加载的时候，instance 静态实例就已经创建并初始化好了，所以，instance 实例的创建过程是线程安全的。不过，这样的实现方式不支持延迟加载（在真正用到 IdGenerator 的时候，再创建实例）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdGenerator</span> </span>&#123; </span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> IdGenerator instance = <span class="keyword">new</span> IdGenerator();</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">IdGenerator</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IdGenerator <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>过去，我一直觉得饿汉式单例模式是很low的单例，因为它实现起来很简单，并且不支持延迟加载。但是，仔细想想，饿汉式真就不如其他几种实现方式吗？如果实例占用资源多（比如占用内存多）或初始化耗时长（比如需要加载各种配置文件），那么根据fail-fast 的设计原则（有问题及早暴露），那我们也希望在程序启动时就将这个实例初始化好，以便我们及时修复。</p>
+<h6 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h6><p>懒汉式相对于饿汉式的优势是支持延迟加载。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdGenerator</span> </span>&#123; </span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> IdGenerator instance;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">IdGenerator</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> IdGenerator <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">     	 instance = <span class="keyword">new</span> IdGenerator();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="双重检测"><a href="#双重检测" class="headerlink" title="双重检测"></a>双重检测</h6><p>双重检测模式是对饿汉式、懒汉式单例模式缺陷的补充，饿汉式不支持延迟加载，懒汉式由于加了一把大锁，如果频繁使用这个类，那频繁加锁、释放锁及并发度低等问题，会导致性能瓶颈，所以就有了双重检测模式，既支持延迟加载，又支持高并发的单例实现方式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdGenerator</span> </span>&#123; </span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> IdGenerator instance;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">IdGenerator</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IdGenerator <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123; <span class="comment">// 第一重检测，如果==null，加锁</span></span><br><span class="line">      	<span class="keyword">synchronized</span>(IdGenerator.class) &#123; <span class="comment">// 类级别的锁</span></span><br><span class="line">       		<span class="keyword">if</span>（instance == <span class="keyword">null</span>） &#123; <span class="comment">// 第二重检测</span></span><br><span class="line">          		instance = <span class="keyword">new</span> IdGenerator();</span><br><span class="line">          &#125;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h6><p>有点类似于饿汉式，但又能做到延迟加载</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdGenerator</span> </span>&#123; </span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">IdGenerator</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonHolder</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> IdGenerator instance = <span class="keyword">new</span> IdGenerator();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IdGenerator <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> SingletonHolder.instance;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ingletonHolder 是一个静态内部类，当外部类 IdGenerator 被加载的时候，并不会创建 SingletonHolder 实例对象。只有当调用 getInstance() 方法时，SingletonHolder 才会被加载，这个时候才会创建 instance。instance 的唯一性、创建过程的线程安全性，都由 JVM 来保证。所以，这种实现方法既保证了线程安全，又能做到延迟加载。</p>
+<h6 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h6><p>枚举本身的特性，保证了实例创建的线程安全性和实例的唯一性。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">IdGenerator</span> </span>&#123;</span><br><span class="line">  INSTANCE;</span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/25/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1767,248 +1968,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/14/mybatis%E6%BA%90%E7%A0%811/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/05/14/mybatis%E6%BA%90%E7%A0%811/" itemprop="url">mybatis概述</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-14T11:02:20+08:00">
-                2021-05-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mybatis/" itemprop="url" rel="index">
-                    <span itemprop="name">mybatis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="mybatis学习流程"><a href="#mybatis学习流程" class="headerlink" title="mybatis学习流程"></a>mybatis学习流程</h4><h5 id="第一目标：Sql执行流程"><a href="#第一目标：Sql执行流程" class="headerlink" title="第一目标：Sql执行流程"></a>第一目标：Sql执行流程</h5><blockquote>
-<p>MyBatis源码学习的第一个目标就是要搞定四个组件所组成的Sql执行流程。这个四个组件分别是，执行器(Execute)、Sql处理器(StatementHandler)、参数处理器(ParameterHandler)、结果集处理器(ResultSetHandler)。这个目标又可分解成4个小目标</p>
-<ol>
-<li>理解四个组件执行上的顺序</li>
-<li>每个组件的作用及意义</li>
-<li>掌握Execute 的三个实现逻辑</li>
-<li>掌握StatementHandler的三个实现逻辑</li>
-</ol>
-<p>这个目标不是最难的，但是最要的。如果有一天你把学的MyBatis源码忘的差不多了，也希望你这个流程不要忘，这是MySql源码的主干和肪脉络。顺着它就可以把MyBatis知识再拾回来。</p>
-<p>说明：关于参数处理、结果集处理其主要逻辑细节在于映射处理，可以放到映射篇章学习。</p>
-</blockquote>
-<h5 id="第二目标：映射配置"><a href="#第二目标：映射配置" class="headerlink" title="第二目标：映射配置"></a><strong>第二目标：映射配置</strong></h5><p>第二个要搞定的目标，就是SQL执行流程当中，所需要的三大映射：分别是动态SQL映射、参数映射、以及结果集映射。不仅要搞清楚映射配置的加载与解析，更重要的弄清楚映射逻辑。</p>
-<ul>
-<li><strong>加载解析</strong>：指用户配置的XML解析成JAVA配置对象。比如<code>&lt;Select&gt;....&lt;/Select&gt;</code>块,最终要解析成SqlSource。或<code>&lt;resultMap&gt;...&lt;/resultMap&gt;</code> 要解析成ResultMap对象。</li>
-<li><strong>映射逻辑</strong>：比如SqlSource如何基于参数生成可执行SQL，ResultMap如何将结果集，解析成JAVA对象等。</li>
-</ul>
-<p>这里面涉及内容非常多，同样可以划分成一个个小目标：</p>
-<blockquote>
-<table>
-<thead>
-<tr>
-<th><strong>小目标</strong></th>
-<th align="left"></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td align="left">理解Sql映射声明(MappedStatement)的作用，以及它与三大映射的关系。</td>
-</tr>
-<tr>
-<td>2</td>
-<td align="left">掌握动态SQL(sqlSource)解析过程，包括其脚本表达示的执行逻辑</td>
-</tr>
-<tr>
-<td>3</td>
-<td align="left">掌握MyBatis所封装的映射工具包的使用</td>
-</tr>
-<tr>
-<td>4</td>
-<td align="left">掌握参数转换过程，以及映射的封装过程</td>
-</tr>
-<tr>
-<td>5</td>
-<td align="left">掌握结果集映射核心逻辑，包括关联映射，1对1、1对多的处理。还有更复杂的循环依赖处理</td>
-</tr>
-<tr>
-<td>6</td>
-<td align="left">掌握全部配置(Confgiuration) 的核心定位,以及它的加载解析过程</td>
-</tr>
-</tbody></table>
-<p>结果集映射是整个MyBatis源码当中的最难的点，其关联映射会涉及子查询、一级缓存引用、循环依赖、延迟加载、懒加载、自动映射等知识点。个个都不是善茬，攻克不易。</p>
-</blockquote>
-<h5 id="第三目标：扩展支撑"><a href="#第三目标：扩展支撑" class="headerlink" title="第三目标：扩展支撑"></a><strong>第三目标：扩展支撑</strong></h5><p>前面两个目标如果搞定了，恭喜你，MyBatis实质上你已经拿下了，接下来的学习就会有一种水道渠成的轻松。</p>
-<p>所谓扩展指对主流程的延伸。如：通过执行器可以完成所有功能，但使用太繁琐，会话(SqlSession)正是为简化它的使用。Mapper接口的设定也是一样，是为进一步简化使用会话。</p>
-<p>除了针对易用性扩展，还有提高执行性能的扩展，比如：缓存、懒加载等。最后的插件机制则是暴露给用户自定义的扩展。接下来我们继续分解学习目标：</p>
-<blockquote>
-<table>
-<thead>
-<tr>
-<th><strong>小目标</strong></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>掌握一二级缓存的结构，及执行逻辑。</td>
-</tr>
-<tr>
-<td>2</td>
-<td>理解会话的意义和其采用的设计模式。</td>
-</tr>
-<tr>
-<td>3</td>
-<td>掌握Mapper接口动态代理流程。</td>
-</tr>
-<tr>
-<td>4</td>
-<td>掌握插件机制底层原理。</td>
-</tr>
-<tr>
-<td>5</td>
-<td>掌握懒加载的流程。</td>
-</tr>
-</tbody></table>
-<p>在当前内容学习过程当中， 你也会掌握大量的设计模式，如二级缓存的装饰器+责任链模式、会话所采用的门面模式、以及Mapper接口对应动态代理模式等。</p>
-</blockquote>
-<h4 id="阅读策略"><a href="#阅读策略" class="headerlink" title="阅读策略"></a>阅读策略</h4><p>找出软件项目的核心功能，重点关注与核心功能相关的代码。</p>
-<h4 id="mybatis核心功能"><a href="#mybatis核心功能" class="headerlink" title="mybatis核心功能"></a>mybatis核心功能</h4><ul>
-<li>将包含 if等标签的复杂数据库操作语句解析为纯粹的 SQL语句。</li>
-<li>将数据库操作节点和映射接口中的抽象方法进行绑定，在抽象方法被调用时执行数据库操作。</li>
-<li>将输入参数对象转化为数据库操作语句中的参数。</li>
-<li>将数据库操作语句的返回结果转化为对象。</li>
-</ul>
-<h4 id="mybatis包结构"><a href="#mybatis包结构" class="headerlink" title="mybatis包结构"></a>mybatis包结构</h4><p><img src="/2021/05/14/mybatis%E6%BA%90%E7%A0%811/mabatis1.jpeg" alt="包结构"></p>
-<h4 id="阅读技巧"><a href="#阅读技巧" class="headerlink" title="阅读技巧"></a>阅读技巧</h4><blockquote>
-<p>源码阅读过程中有一个非常重要的技巧，那就是从整个项目的外围源码入手。</p>
-<p>外围源码很少依赖核心源码，相对独立。先阅读外围源码，受到其他未阅读部分的干扰较小。</p>
-<p>核心源码大量依赖外围源码。在阅读核心源码时应确保其涉及的外围源码均已阅读完毕，这样可以降低核心源码的阅读难度。</p>
-<p>于是整个源码阅读过程会如同剥洋葱一般，由外及内、逐层深入。</p>
-<p>MyBatis 源码中，基础功能包是最外围的包，配置解析包位于中间，核心操作包位于内层。因此，本书中会按照基础功能包、配置解析包、核心操作包的顺序，以包为单位，对包中的源代码逐一进行阅读。</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2059,7 +2018,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
