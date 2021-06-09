@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2021/06/09/volatile/</loc>
+    
+    <lastmod>2021-06-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://example.com/2021/05/27/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</loc>
+    
+    <lastmod>2021-06-09</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://example.com/2021/06/07/ThreadLocal/</loc>
     
     <lastmod>2021-06-07</lastmod>
@@ -10,13 +24,6 @@
   
   <url>
     <loc>http://example.com/2021/05/25/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/</loc>
-    
-    <lastmod>2021-05-27</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://example.com/2021/05/27/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</loc>
     
     <lastmod>2021-05-27</lastmod>
     

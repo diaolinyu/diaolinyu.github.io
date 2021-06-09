@@ -89,7 +89,7 @@
 <meta property="og:description" content="前言23种设计模式中，单例模式是比较简单并且较为常用的一种。  什么是单例模式？ 单例模式的特点是什么？ 饿汉式一定比懒汉式差吗？ 单例模式是否存在缺陷？有没有替代方案？  单例模式定义很简单，一个类只允许创建一个实例，那么这个类就是单例类，这种模式就是单例模式。  定义中提到，“一个类只允许创建唯一一个对象”。那对象的唯一性的作用范围是什么呢？是指线程内只允许创建一个对象，还是指进程内只允许创建">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-05-27T02:59:10.000Z">
-<meta property="article:modified_time" content="2021-05-27T08:12:54.838Z">
+<meta property="article:modified_time" content="2021-06-09T10:26:19.323Z">
 <meta property="article:author" content="dly">
 <meta name="twitter:card" content="summary">
 
@@ -409,7 +409,7 @@
 <h6 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h6><p>有点类似于饿汉式，但又能做到延迟加载</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdGenerator</span> </span>&#123; </span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">IdGenerator</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonHolder</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> IdGenerator instance = <span class="keyword">new</span> IdGenerator();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IdGenerator <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> SingletonHolder.instance;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>ingletonHolder 是一个静态内部类，当外部类 IdGenerator 被加载的时候，并不会创建 SingletonHolder 实例对象。只有当调用 getInstance() 方法时，SingletonHolder 才会被加载，这个时候才会创建 instance。instance 的唯一性、创建过程的线程安全性，都由 JVM 来保证。所以，这种实现方法既保证了线程安全，又能做到延迟加载。</p>
+<p>SingletonHolder 是一个静态内部类，当外部类 IdGenerator 被加载的时候，并不会创建 SingletonHolder 实例对象。只有当调用 getInstance() 方法时，SingletonHolder 才会被加载，这个时候才会创建 instance。instance 的唯一性、创建过程的线程安全性，都由 JVM 来保证。所以，这种实现方法既保证了线程安全，又能做到延迟加载。</p>
 <h6 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h6><p>枚举本身的特性，保证了实例创建的线程安全性和实例的唯一性。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">IdGenerator</span> </span>&#123;</span><br><span class="line">  INSTANCE;</span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -526,7 +526,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

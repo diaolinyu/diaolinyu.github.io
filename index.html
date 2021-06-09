@@ -261,6 +261,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/09/volatile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/06/09/volatile/" itemprop="url">volatile</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-09T16:55:01+08:00">
+                2021-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">java多线程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在讲解volatile之前，我们先来了解一下内存可见性问题</p>
+<p>volatile是java中比较重要的一个关键字，它是轻量级锁，有两个作用</p>
+<blockquote>
+<ol>
+<li>保证共享变量在不同线程之间可见</li>
+<li>禁止指令重排序</li>
+</ol>
+</blockquote>
+<h4 id="内存可见性问题"><a href="#内存可见性问题" class="headerlink" title="内存可见性问题"></a>内存可见性问题</h4><p>首先来看看在多线程下处理共享变量的java内存模型：</p>
+<p><img src="/2021/06/09/volatile/javaMM.jpg" alt="javaMM"></p>
+<blockquote>
+<p>Java内存模型规定，将所有的变量都存放在主内存中，当线程使用变量时，会把主内存里面的变量复制到自己的工作空间或者叫作工作内存，线程读写变量时操作的是自己工作内存中的变量。</p>
+</blockquote>
+<p>Java内存模型是一个抽象的概念，那么在实际实现中线程的工作内存是什么呢？看下图：</p>
+<p><img src="/2021/06/09/volatile/javaMMF.png" alt="javaMMF"></p>
+<p>图中所示是一个双核CPU系统架构，每个核有自己的控制器和运算器，其中控制器包含一组寄存器和操作控制器，运算器执行算术逻辑运算。每个核都有自己的一级缓存，在有些架构里面还有一个所有CPU都共享的二级缓存。</p>
+<p>那么<strong>Java内存模型里面的工作内存，就对应这里的L1或者L2缓存或者CPU的寄存器</strong>。</p>
+<p>当一个线程操作共享变量时，它首先从主内存复制共享变量到自己的工作内存，然后对工作内存里的变量进行处理，处理完后将变量值更新到主内存。</p>
+<p>那么假如线程A和线程B同时处理一个共享变量，会出现什么情况？我们使用图2所示CPU架构，假设线程A和线程B使用不同CPU执行，并且当前两级Cache都为空，那么这时候由于Cache的存在，将会导致内存不可见问题，具体看下面的分析：</p>
+<ul>
+<li>线程A首先获取共享变量1的值，由于两级Cache都没有命中，所以加载主内存中1的值，假如为0。然后把var1=0的值缓存到两级缓存，线程A修改var1的值为1，然后将其写入两级Cache，并且刷新到主内存。线程A操作完毕后，线程A所在的CPU的两级Cache内和主内存里面的var1的值都是1。</li>
+<li>线程B获取var1的值，首先一级缓存没有命中，然后看二级缓存，二级缓存命中了，所以返回var1= 1；到这里一切都是正常的，因为这时候主内存中也是var1=1。然后线程B修改var1的值为2，并将其存放到线程2所在的一级Cache和共享二级Cache中，最后更新主内存中var1的值为2，到这里一切都是好的。</li>
+<li>线程A这次又需要修改var1的值，获取时一级缓存命中，并且var1=1，到这里问题就出现了，明明线程B已经把var1的值修改为了2，为何线程A获取的还是1呢？这就是共享变量的内存不可见问题，也就是线程B写入的值对线程A不可见。</li>
+</ul>
+<p>在java中，volatile关键字就可以解决这个问题，接下来我们来看看它是怎么解决的：</p>
+<h4 id="volatile特性一：保证共享变量内存可见"><a href="#volatile特性一：保证共享变量内存可见" class="headerlink" title="volatile特性一：保证共享变量内存可见"></a>volatile特性一：保证共享变量内存可见</h4><p>volatile具体是怎么实现共享变量线程间可见的呢？简单来说可以分为两点：</p>
+<ol>
+<li><p>当一个变量被声明为volatile时，线程在写入变量时不会把值缓存在寄存器或者其他地方,而是会把值刷新回主内存。</p>
+</li>
+<li><p>当其他线程读取该共享变量时，会从主内存重新获取最新值，而不是使用当前线程的工作内存中的值。</p>
+</li>
+</ol>
+<h4 id="volatile特性二：禁止指令重排序"><a href="#volatile特性二：禁止指令重排序" class="headerlink" title="volatile特性二：禁止指令重排序"></a>volatile特性二：禁止指令重排序</h4><h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>我们都知道，当多个线程操作同一个共享变量的时候，就有可能发生线程安全问题，volatile一定程度上可以保证线程安全，它能保证可见性，但无法保证原子性。</p>
+<blockquote>
+<p>所谓原子性操作，是指执行一系列操作时，这些操作要么全部执行，要么全部不执行，不存在只执行其中一部分的情况。</p>
+</blockquote>
+<p>什么时候下适合使用volatile呢？</p>
+<ol>
+<li><p>写入变量不依赖变量的当前值，例如 i ++ 这种操作就不适合使用volatile修饰，因为它依赖 i 的当前值，是</p>
+<p><strong>获取——计算——写入</strong>三步操作，这三步操作不是原子性的。</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/07/ThreadLocal/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -551,7 +734,7 @@
 <h6 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h6><p>有点类似于饿汉式，但又能做到延迟加载</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IdGenerator</span> </span>&#123; </span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">IdGenerator</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonHolder</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> IdGenerator instance = <span class="keyword">new</span> IdGenerator();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IdGenerator <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> SingletonHolder.instance;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>ingletonHolder 是一个静态内部类，当外部类 IdGenerator 被加载的时候，并不会创建 SingletonHolder 实例对象。只有当调用 getInstance() 方法时，SingletonHolder 才会被加载，这个时候才会创建 instance。instance 的唯一性、创建过程的线程安全性，都由 JVM 来保证。所以，这种实现方法既保证了线程安全，又能做到延迟加载。</p>
+<p>SingletonHolder 是一个静态内部类，当外部类 IdGenerator 被加载的时候，并不会创建 SingletonHolder 实例对象。只有当调用 getInstance() 方法时，SingletonHolder 才会被加载，这个时候才会创建 instance。instance 的唯一性、创建过程的线程安全性，都由 JVM 来保证。所以，这种实现方法既保证了线程安全，又能做到延迟加载。</p>
 <h6 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h6><p>枚举本身的特性，保证了实例创建的线程安全性和实例的唯一性。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">IdGenerator</span> </span>&#123;</span><br><span class="line">  INSTANCE;</span><br><span class="line">  <span class="keyword">private</span> AtomicLong id = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    <span class="keyword">return</span> id.incrementAndGet();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -1759,190 +1942,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/" itemprop="url">基础功能包-exceptions包</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-16T23:32:40+08:00">
-                2021-05-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mybatis/" itemprop="url" rel="index">
-                    <span itemprop="name">mybatis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="java异常体系"><a href="#java异常体系" class="headerlink" title="java异常体系"></a>java异常体系</h4><p><img src="/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/exception1.jpeg" alt="异常体系"></p>
-<!--Throwable及其子类类图-->
-
-<blockquote>
-<p>图中所有异常，Error及其子类代表JVM出现异常，且无法通过软件修复；</p>
-<p>RuntimeException 及其子类是程序设计的错误，可以在编写程序时避免。</p>
-<p>以上这两大类异常称为免检异常，即不需要对这两类异常进行强制检查。</p>
-<p>而除上述两类异常外的其他异常，它们的发生与外部环境有关，称为<strong>必检异常</strong>。<strong>在编写程序时必须用 try、catch 语句将其包围起来。</strong></p>
-</blockquote>
-<h4 id="异常链"><a href="#异常链" class="headerlink" title="异常链"></a>异常链</h4><p><img src="/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/exception2.jpeg" alt="异常链"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Throwable</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">			 <span class="keyword">private</span> String detailMessage; 			<span class="comment">// 	用来存储异常的详细信息</span></span><br><span class="line">			 <span class="keyword">private</span> Throwable cause = <span class="keyword">this</span>;   <span class="comment">// 用来存储引发异常的原因</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Throwable对象，其主要的成员变量有 detailMessage和cause。</p>
-</blockquote>
-<h4 id="序列化与反序列化"><a href="#序列化与反序列化" class="headerlink" title="序列化与反序列化"></a>序列化与反序列化</h4><blockquote>
-<p>序列化是把对象转换为字节序列的过程；反序列化是把字节序列恢复为对象的过程。</p>
-<p>对象的序列化主要有两个目的：一是将对象转化成字节后保存在存储介质中，即为了持久化对象；二是将对象转化成字节后在网络上传输，即为了传输对象。</p>
-<p>而与之对应，将字节还原为对象的过程就是反序列化。</p>
-</blockquote>
-<p>序列化对象的目的有两个：</p>
-<pre><code>1.  对象数据持久化
- 2.  在网络中传输
-</code></pre>
-<p>在 Java中，要表明一个类的对象是可序列化的，则必须继承Serializable接口或其子接口 Externalizable接口。</p>
-<h5 id="serialVersionUID"><a href="#serialVersionUID" class="headerlink" title="serialVersionUID"></a>serialVersionUID</h5><p>serialVersionUID字段叫作<strong>序列化版本控制字段</strong>，我们经常会在实现了 Serializable 接口的类中见到它。</p>
-<blockquote>
-<p>序列化与反序列化过程中，要面临版本问题。例如，将一个User类的对象 user1持久化到了硬盘中，然后增删了 User类的属性，那么此时还能将持久化在硬盘中的 user1对象的序列还原成一个新的 User类的对象吗？</p>
-<p>该问题的回答需要涉及 Serializable接口的 serialVersionUID字段。</p>
-<p>在反序列化过程中，如果对象字节序列中的 serialVersionUID与当前类的该值不同，则反序列化失败，否则成功。</p>
-</blockquote>
-<p>在使用时，一般都会为实现Serializable接口的类<strong>显式声明一个serialVersionUID</strong>。这样便可以：</p>
-<blockquote>
-<p> 在希望类的版本间实现序列化和反序列化的兼容时，保持serialVersionUID值不变。</p>
-<p> 在希望类的版本间序列化和反序列化不兼容时，确保serialVersionUID值发生变化。</p>
-</blockquote>
-<p>mybatis异常体系</p>
-<p><img src="/2021/05/16/%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD%E5%8C%85-exceptions%E5%8C%85/exception3.jpeg" alt="mybatis异常体系"></p>
-<blockquote>
-<p>IbatisException类仅仅作为PersistenceException类的父类存在，所以IbatisException类是被架空的，可以删除IbatisException类后，让PersistenceException类直接继承RuntimeException类。</p>
-</blockquote>
-<h4 id="ExceptionFactory"><a href="#ExceptionFactory" class="headerlink" title="ExceptionFactory"></a>ExceptionFactory</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExceptionFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 不允许实例化该类</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">ExceptionFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Prevent Instantiation</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 静态方法，直接调用</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 生成一个RuntimeException异常</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> message 异常信息</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> e 异常</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span> 新的RuntimeException异常</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> RuntimeException <span class="title">wrapException</span><span class="params">(String message, Exception e)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> PersistenceException(ErrorContext.instance().message(message).cause(e).toString(), e);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1993,7 +1992,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
