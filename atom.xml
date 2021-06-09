@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-05-27T08:12:54.838Z</updated>
+  <updated>2021-06-07T07:35:40.168Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,21 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ThreadLocal</title>
+    <link href="http://example.com/2021/06/07/ThreadLocal/"/>
+    <id>http://example.com/2021/06/07/ThreadLocal/</id>
+    <published>2021-06-07T07:34:22.000Z</published>
+    <updated>2021-06-07T07:35:40.168Z</updated>
+    
+    
+    
+    
+    <category term="java多线程" scheme="http://example.com/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>单例模式</title>
