@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-06-30T07:37:14.203Z</updated>
+  <updated>2022-01-11T09:16:31.304Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,51 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>MyISAM表锁</title>
+    <link href="http://example.com/2022/01/11/MyISAM%E8%A1%A8%E9%94%81/"/>
+    <id>http://example.com/2022/01/11/MyISAM%E8%A1%A8%E9%94%81/</id>
+    <published>2022-01-11T09:14:56.000Z</published>
+    <updated>2022-01-11T09:16:31.304Z</updated>
+    
+    
+    
+    
+    <category term="mysql" scheme="http://example.com/categories/mysql/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>函数式接口</title>
+    <link href="http://example.com/2021/07/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3/"/>
+    <id>http://example.com/2021/07/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3/</id>
+    <published>2021-07-02T08:11:41.000Z</published>
+    <updated>2021-07-02T11:45:26.172Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h4><blockquote><p>有且仅有一个抽象方法的接口就是函数式接口</p></blockquote><h4 id="常用函数式接口"><a href="#常用函数式接口" class="headerlink" title="常用函数式接口"></a>常用函数式接口</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Converter</span>&lt;<span class="title">S</span>, <span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function">T <span class="title">convert</span><span class="params">(S source)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 语义 接收一个S类型的参数返回一个T类型的结果，类似于Stream中的map操作</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h4 id=&quot;函数式接口&quot;&gt;&lt;a href=&quot;#函数式接口&quot; class=&quot;headerlink&quot; title=&quot;函数式接口&quot;&gt;&lt;/a&gt;函数式接口&lt;/h4&gt;&lt;blockquote&gt;
+&lt;p&gt;有且仅有一个抽象方法的接口就是函数式接口&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id</summary>
+      
+    
+    
+    
+    <category term="随笔" scheme="http://example.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>书单</title>
     <link href="http://example.com/2021/06/30/%E4%B9%A6%E5%8D%95/"/>
     <id>http://example.com/2021/06/30/%E4%B9%A6%E5%8D%95/</id>
     <published>2021-06-30T07:20:42.000Z</published>
-    <updated>2021-06-30T07:37:14.203Z</updated>
+    <updated>2021-06-30T07:47:12.149Z</updated>
     
     <content type="html"><![CDATA[<p>天下熙熙皆为利来，天下攘攘皆为利往。</p><p>书籍是人类进步的阶梯。</p><p>为了明天，干杯🍻</p><p>我也要写出强悍的代码！</p><h4 id="我的书单"><a href="#我的书单" class="headerlink" title="我的书单"></a>我的书单</h4><h5 id="技术序列"><a href="#技术序列" class="headerlink" title="技术序列"></a>技术序列</h5><h6 id="Java-8实战"><a href="#Java-8实战" class="headerlink" title="Java 8实战"></a>Java 8实战</h6><blockquote><p>对java8中的新特性介绍的非常全面，尤其是lamdba表达式和流的操作。另外关于日期的API，异步编程，Optional，函数式编程等也对日常开发中有很强的借鉴作用。</p></blockquote><h6 id="Java性能权威指南-Java-Performance-The-Definitive-Guide"><a href="#Java性能权威指南-Java-Performance-The-Definitive-Guide" class="headerlink" title="Java性能权威指南|Java Performance: The Definitive Guide"></a>Java性能权威指南|Java Performance: The Definitive Guide</h6><h6 id="实战Java高并发程序设计-葛一鸣"><a href="#实战Java高并发程序设计-葛一鸣" class="headerlink" title="实战Java高并发程序设计|葛一鸣"></a>实战Java高并发程序设计|葛一鸣</h6><h6 id="ava并发编程实战"><a href="#ava并发编程实战" class="headerlink" title="ava并发编程实战"></a>ava并发编程实战</h6><h6 id="Effective-Java中文版（第3版）-Effective-Java-Third-Edition"><a href="#Effective-Java中文版（第3版）-Effective-Java-Third-Edition" class="headerlink" title="Effective Java中文版（第3版）|Effective Java Third Edition"></a>Effective Java中文版（第3版）|Effective Java Third Edition</h6><h6 id="深入理解Java虚拟机（第3版）-周志明"><a href="#深入理解Java虚拟机（第3版）-周志明" class="headerlink" title="深入理解Java虚拟机（第3版）| 周志明"></a>深入理解Java虚拟机（第3版）| 周志明</h6><h6 id="Java虚拟机规范（Java-SE-8版）-爱飞翔、周志明"><a href="#Java虚拟机规范（Java-SE-8版）-爱飞翔、周志明" class="headerlink" title="Java虚拟机规范（Java SE 8版）|爱飞翔、周志明"></a>Java虚拟机规范（Java SE 8版）|爱飞翔、周志明</h6><h6 id="MySQL必知必会"><a href="#MySQL必知必会" class="headerlink" title="MySQL必知必会"></a>MySQL必知必会</h6><h6 id="高性能MySQL"><a href="#高性能MySQL" class="headerlink" title="高性能MySQL"></a>高性能MySQL</h6><h6 id="Redis设计与实现-黄健宏"><a href="#Redis设计与实现-黄健宏" class="headerlink" title="Redis设计与实现|黄健宏"></a>Redis设计与实现|黄健宏</h6><h6 id="Redis-深度历险：核心原理与应用实践-钱文品"><a href="#Redis-深度历险：核心原理与应用实践-钱文品" class="headerlink" title="Redis 深度历险：核心原理与应用实践|钱文品"></a>Redis 深度历险：核心原理与应用实践|钱文品</h6><h6 id="TCP-IP详解-卷1：协议"><a href="#TCP-IP详解-卷1：协议" class="headerlink" title="TCP/IP详解 卷1：协议"></a>TCP/IP详解 卷1：协议</h6><h6 id="深入剖析Tomcat"><a href="#深入剖析Tomcat" class="headerlink" title="深入剖析Tomcat"></a>深入剖析Tomcat</h6><h6 id="架构探险分布式服务框架-李业兵"><a href="#架构探险分布式服务框架-李业兵" class="headerlink" title="架构探险分布式服务框架 | 李业兵"></a>架构探险分布式服务框架 | 李业兵</h6><h6 id="深入分析JavaWeb技术内幕-许令波"><a href="#深入分析JavaWeb技术内幕-许令波" class="headerlink" title="深入分析JavaWeb技术内幕 | 许令波"></a>深入分析JavaWeb技术内幕 | 许令波</h6><blockquote><p>java编译原理、 Servlet工作原理、 Tomcat、spring和iBatis这几章的收获很大。</p></blockquote>]]></content>
     
@@ -419,59 +459,6 @@
     
     
     <category term="数学" scheme="http://example.com/categories/%E6%95%B0%E5%AD%A6/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>常用git命令</title>
-    <link href="http://example.com/2021/04/21/%E5%B8%B8%E7%94%A8git%E5%91%BD%E4%BB%A4/"/>
-    <id>http://example.com/2021/04/21/%E5%B8%B8%E7%94%A8git%E5%91%BD%E4%BB%A4/</id>
-    <published>2021-04-21T08:57:04.000Z</published>
-    <updated>2021-04-23T03:14:11.769Z</updated>
-    
-    <content type="html"><![CDATA[<ol><li><p>创建本地分支    git branch 分支名</p></li><li><p>删除分支   </p></li><li><p>查看所有分支   git branch -a</p></li><li><p>检出远程分支  git checkout -b dly  origin/dly</p><p>上面的话的意思是：切换到新的分支dly，并且跟踪远程中的分支dly</p></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;创建本地分支    git branch 分支名&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;删除分支   &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;查看所有分支   git branch -a&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;检出远程分支  git checkout </summary>
-      
-    
-    
-    
-    <category term="随笔" scheme="http://example.com/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>IDEA快捷键</title>
-    <link href="http://example.com/2021/04/21/IDEA%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
-    <id>http://example.com/2021/04/21/IDEA%E5%BF%AB%E6%8D%B7%E9%94%AE/</id>
-    <published>2021-04-21T08:56:03.000Z</published>
-    <updated>2021-05-19T07:20:32.168Z</updated>
-    
-    <content type="html"><![CDATA[<p>Command + O ：查找类文件</p><p>查看图表diagram ： shift+option+command+u</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Command + O ：查找类文件&lt;/p&gt;
-&lt;p&gt;查看图表diagram ： shift+option+command+u&lt;/p&gt;
-</summary>
-      
-    
-    
-    
-    <category term="随笔" scheme="http://example.com/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
   </entry>
